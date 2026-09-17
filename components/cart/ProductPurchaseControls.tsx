@@ -2,6 +2,7 @@
 
 import { Minus, Plus, ShoppingCart } from "lucide-react";
 import { useState } from "react";
+
 import type { Product } from "@/types/product";
 import { useCart } from "@/components/cart/CartProvider";
 
@@ -23,22 +24,25 @@ export default function ProductPurchaseControls({
 
   return (
     <div className="mt-8">
-      <p className="mb-3 text-sm font-medium text-gray-900">
+      <p className="mb-3 text-sm font-semibold text-gray-900">
         Quantity
       </p>
 
-      <div className="flex w-fit items-center rounded-lg border border-gray-300">
+      <div className="flex w-fit items-center overflow-hidden rounded-md border border-gray-300 bg-white">
         <button
           type="button"
           onClick={() =>
-            setQuantity((current) => Math.max(1, current - 1))
+            setQuantity((current) =>
+              Math.max(1, current - 1)
+            )
           }
-          className="flex h-11 w-11 items-center justify-center hover:bg-gray-100"
+          aria-label="Decrease quantity"
+          className="flex h-10 w-10 items-center justify-center text-gray-600 transition-colors hover:bg-[#fff1e6] hover:text-[#ff6a00]"
         >
-          <Minus size={16} />
+          <Minus size={15} />
         </button>
 
-        <span className="flex h-11 w-12 items-center justify-center border-x border-gray-300 text-sm font-medium">
+        <span className="flex h-10 w-12 items-center justify-center border-x border-gray-300 text-sm font-semibold text-gray-900">
           {quantity}
         </span>
 
@@ -47,18 +51,19 @@ export default function ProductPurchaseControls({
           onClick={() =>
             setQuantity((current) => current + 1)
           }
-          className="flex h-11 w-11 items-center justify-center hover:bg-gray-100"
+          aria-label="Increase quantity"
+          className="flex h-10 w-10 items-center justify-center text-gray-600 transition-colors hover:bg-[#fff1e6] hover:text-[#ff6a00]"
         >
-          <Plus size={16} />
+          <Plus size={15} />
         </button>
       </div>
 
       <button
         type="button"
         onClick={handleAddToCart}
-        className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-black px-6 py-3.5 text-sm font-medium text-white transition hover:bg-gray-800"
+        className="mt-4 flex w-full items-center justify-center gap-2 rounded-md bg-[#ff6a00] px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-[#e65f00] hover:shadow-md active:scale-[0.99]"
       >
-        <ShoppingCart size={18} />
+        <ShoppingCart size={17} />
         Add to Cart
       </button>
     </div>

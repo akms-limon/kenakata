@@ -11,7 +11,7 @@ type FeaturedProductsProps = {
 export default function FeaturedProducts({
   products,
 }: FeaturedProductsProps) {
-  const [visibleCount, setVisibleCount] = useState(8);
+  const [visibleCount, setVisibleCount] = useState(10);
 
   const visibleProducts = products.slice(0, visibleCount);
 
@@ -19,7 +19,7 @@ export default function FeaturedProducts({
 
   return (
     <>
-      <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         {visibleProducts.map((product) => (
           <ProductCard
             key={product.id}
@@ -29,13 +29,13 @@ export default function FeaturedProducts({
       </div>
 
       {hasMoreProducts && (
-        <div className="mt-10 flex justify-center">
+        <div className="mt-8 flex justify-center">
           <button
             type="button"
             onClick={() =>
-              setVisibleCount((count) => count + 8)
+              setVisibleCount((count) => count + 10)
             }
-            className="rounded-lg border border-gray-300 px-6 py-3 text-sm font-medium text-gray-900 transition hover:bg-gray-100"
+            className="rounded-md border border-gray-300 px-5 py-2 text-xs font-medium text-gray-800 transition-all duration-200 hover:border-[#ff6a00] hover:text-[#ff6a00] active:scale-[0.98]"
           >
             Load More
           </button>

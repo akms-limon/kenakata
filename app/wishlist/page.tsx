@@ -12,25 +12,28 @@ export default function WishlistPage() {
   if (wishlistItems.length === 0) {
     return (
       <main className="mx-auto flex min-h-[70vh] max-w-3xl items-center justify-center px-4 py-16">
-        <div className="w-full rounded-2xl border border-gray-200 bg-white p-10 text-center shadow-sm">
-          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gray-100">
-            <Heart size={36} className="text-gray-500" />
+        <div className="w-full rounded-xl border border-gray-200 bg-white p-8 text-center">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#fff1e6]">
+            <Heart
+              size={30}
+              className="text-[#ff4470]"
+            />
           </div>
 
-          <h1 className="mt-6 text-3xl font-bold text-gray-900">
+          <h1 className="mt-5 text-2xl font-bold tracking-tight text-gray-900">
             Your Wishlist Is Empty
           </h1>
 
-          <p className="mx-auto mt-3 max-w-md text-gray-600">
-            You have not added any products to your wishlist yet.
-            Find something you love and save it here.
+          <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-gray-500">
+            Save products you love and come back to them
+            anytime.
           </p>
 
           <Link
             href="/products"
-            className="mt-8 inline-flex rounded-lg bg-black px-6 py-3 text-sm font-medium text-white transition hover:bg-gray-800"
+            className="mt-6 inline-flex rounded-md bg-[#ff6a00] px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-[#e65f00] hover:shadow-md active:scale-[0.98]"
           >
-            Continue Shopping
+            Explore Products
           </Link>
         </div>
       </main>
@@ -38,20 +41,31 @@ export default function WishlistPage() {
   }
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-10">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">
-          My Wishlist
-        </h1>
+    <main className="mx-auto max-w-7xl px-4 py-10">
+      <div className="flex items-end justify-between gap-4 border-b border-gray-200 pb-5">
+        <div>
+          <div className="flex items-center gap-2">
+            <Heart
+              size={21}
+              className="text-[#ff4470]"
+            />
 
-        <p className="mt-2 text-sm text-gray-600">
-          {wishlistItems.length}{" "}
-          {wishlistItems.length === 1 ? "product" : "products"}{" "}
-          saved
-        </p>
+            <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+              My Wishlist
+            </h1>
+          </div>
+
+          <p className="mt-2 text-sm text-gray-500">
+            {wishlistItems.length}{" "}
+            {wishlistItems.length === 1
+              ? "product"
+              : "products"}{" "}
+            saved for later
+          </p>
+        </div>
       </div>
 
-      <div className="mt-8 space-y-4">
+      <div className="mt-6 space-y-3">
         {wishlistItems.map((product) => (
           <WishlistItem
             key={product.id}

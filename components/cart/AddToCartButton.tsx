@@ -17,9 +17,9 @@ export default function AddToCartButton({
     <button
       type="button"
       onClick={() => addToCart(product)}
-      className="flex items-center justify-center gap-2 rounded-lg bg-black px-4 py-2.5 text-sm font-medium text-white transition hover:bg-gray-800"
+      className="flex h-8 w-full items-center justify-center gap-1 rounded-md bg-blue-50 px-2 !text-[14px] !leading-none font-medium text-[#0650ee] transition-all duration-200 hover:bg-blue-100 active:scale-[0.98]"
     >
-      <ShoppingCart size={18} />
+      <ShoppingCart size={10} />
       Add to Cart
     </button>
   );

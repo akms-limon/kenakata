@@ -19,54 +19,56 @@ export default function WishlistItem({
   const { addToCart } = useCart();
 
   return (
-    <article className="flex flex-col gap-5 rounded-xl border border-gray-200 bg-white p-5 shadow-sm sm:flex-row sm:items-center">
+    <article className="flex flex-col gap-4 rounded-xl border border-gray-200 bg-white p-4 transition-shadow duration-200 hover:shadow-sm sm:flex-row sm:items-center">
       <Link
         href={`/products/${product.id}`}
         className="shrink-0"
       >
-        <div className="relative h-28 w-28 overflow-hidden rounded-lg bg-gray-100">
+        <div className="relative h-24 w-24 overflow-hidden rounded-lg bg-gray-50">
           <Image
             src={product.images[0]}
             alt={product.title}
             fill
-            sizes="112px"
-            className="object-cover"
+            sizes="96px"
+            className="object-cover transition-transform duration-300 hover:scale-105"
           />
         </div>
       </Link>
 
       <div className="min-w-0 flex-1">
         <Link href={`/products/${product.id}`}>
-          <h2 className="line-clamp-2 text-lg font-semibold text-gray-900 transition hover:text-gray-600">
+          <h2 className="line-clamp-2 text-sm font-semibold text-gray-900 transition-colors duration-200 hover:text-[#ff6a00]">
             {product.title}
           </h2>
         </Link>
 
-        <p className="mt-2 text-sm text-gray-500">
-          {product.category.name}
+        <p className="mt-1.5 text-xs text-gray-500">
+          {product.category?.name || "Uncategorized"}
         </p>
 
-        <p className="mt-2 text-lg font-bold text-gray-900">
+        <p className="mt-2 text-base font-bold text-[#ff6a00]">
           ${product.price}
         </p>
       </div>
 
-      <div className="flex shrink-0 flex-col gap-2 sm:w-40">
+      <div className="flex shrink-0 flex-col gap-2 sm:w-36">
         <button
           type="button"
           onClick={() => addToCart(product)}
-          className="flex items-center justify-center gap-2 rounded-lg bg-black px-4 py-2.5 text-sm font-medium text-white transition hover:bg-gray-800"
+          className="flex h-9 w-full items-center justify-center gap-1.5 rounded-md bg-[#ff6a00] px-3 text-xs font-semibold text-white transition-all duration-200 hover:bg-[#e65f00] hover:shadow-sm active:scale-[0.98]"
         >
-          <ShoppingCart size={17} />
+          <ShoppingCart size={14} />
           Add to Cart
         </button>
 
         <button
           type="button"
-          onClick={() => removeFromWishlist(product.id)}
-          className="flex items-center justify-center gap-2 rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
+          onClick={() =>
+            removeFromWishlist(product.id)
+          }
+          className="flex h-9 w-full items-center justify-center gap-1.5 rounded-md border border-gray-300 px-3 text-xs font-medium text-gray-600 transition-all duration-200 hover:border-[#ff4470] hover:text-[#ff4470] active:scale-[0.98]"
         >
-          <Heart size={17} />
+          <Heart size={14} />
           Remove
         </button>
       </div>
