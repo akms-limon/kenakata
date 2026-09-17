@@ -24,27 +24,18 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      const data = await loginUser(email, password);
+    await loginUser(email, password);
 
-      localStorage.setItem(
-        "access_token",
-        data.access_token
-      );
-
-      localStorage.setItem(
-        "refresh_token",
-        data.refresh_token
-      );
-
-      router.push(callbackUrl);
+    router.replace(callbackUrl);
+    router.refresh();
     } catch (error) {
-      setError(
+    setError(
         error instanceof Error
-          ? error.message
-          : "Login failed"
-      );
+        ? error.message
+        : "Login failed"
+    );
     } finally {
-      setIsLoading(false);
+    setIsLoading(false);
     }
   }
 
@@ -123,7 +114,7 @@ export default function LoginPage() {
         </form>
 
         <p className="mt-6 text-center text-sm text-gray-600">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link
             href="/register"
             className="font-medium text-gray-900 hover:underline"

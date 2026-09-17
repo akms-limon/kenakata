@@ -1,6 +1,9 @@
 type LoginResponse = {
-  access_token: string;
-  refresh_token: string;
+  message: string;
+};
+
+type RegisterResponse = {
+  message: string;
 };
 
 export async function loginUser(
@@ -27,4 +30,42 @@ export async function loginUser(
   }
 
   return data;
+}
+
+export async function registerUser(
+  name: string,
+  email: string,
+  password: string
+): Promise<RegisterResponse> {
+  const response = await fetch("/api/auth/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name,
+      email,
+      password,
+    }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(
+      data.message || "Registration failed"
+    );
+  }
+
+  return data;
+}
+
+export async function logoutUser(): Promise<void> {
+  const response = await fetch("/api/auth/logout", {
+    method: "POST",
+  });
+
+  if (!response.ok) {
+    throw new Error("Logout failed");
+  }
 }

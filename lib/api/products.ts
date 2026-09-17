@@ -7,7 +7,11 @@ export async function getProducts(): Promise<Product[]> {
     throw new Error("API_URL is not configured");
   }
 
-  const response = await fetch(`${API_URL}/products`);
+  const response = await fetch(`${API_URL}/products`, {
+    next: {
+        revalidate: 3600,
+    },
+  });
 
   if (!response.ok) {
     throw new Error("Failed to fetch products");
@@ -24,13 +28,27 @@ export async function getProduct(id: string): Promise<Product> {
     throw new Error("API_URL is not configured");
   }
 
-  const response = await fetch(`${API_URL}/products/${id}`);
+  const response = await fetch(`${API_URL}/products`, {
+    next: {
+      revalidate: 3600,
+    },
+  });
 
   if (!response.ok) {
-    throw new Error("Failed to fetch product");
+    throw new Error("Failed to fetch products");
   }
 
-  return response.json();
+  const products: Product[] = await response.json();
+
+  const product = products.find(
+    (item) => item.id === Number(id)
+  );
+
+  if (!product) {
+    throw new Error("Product not found");
+  }
+
+  return product;
 }
 
 

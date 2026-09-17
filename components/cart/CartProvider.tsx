@@ -15,6 +15,7 @@ type CartContextType = {
   addToCart: (product: Product) => void;
   removeFromCart: (productId: number) => void;
   updateQuantity: (productId: number, quantity: number) => void;
+  clearCart: () => void;
 };
 
 const CartContext = createContext<CartContextType | undefined>(
@@ -33,9 +34,11 @@ export function CartProvider({
     const savedCart = localStorage.getItem("cart");
 
     if (savedCart) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setCartItems(JSON.parse(savedCart));
     }
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsLoaded(true);
   }, []);
 
@@ -44,7 +47,10 @@ export function CartProvider({
       return;
     }
 
-    localStorage.setItem("cart", JSON.stringify(cartItems));
+    localStorage.setItem(
+      "cart",
+      JSON.stringify(cartItems)
+    );
   }, [cartItems, isLoaded]);
 
   function addToCart(product: Product) {
@@ -100,6 +106,10 @@ export function CartProvider({
     );
   }
 
+  function clearCart() {
+    setCartItems([]);
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -107,6 +117,7 @@ export function CartProvider({
         addToCart,
         removeFromCart,
         updateQuantity,
+        clearCart,
       }}
     >
       {children}

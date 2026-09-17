@@ -17,11 +17,13 @@ export default async function ProductDetails({
   params,
 }: ProductDetailsProps) {
   const { id } = await params;
+  console.log("PRODUCT ID:", id);
 
   let product;
 
   try {
     product = await getProduct(id);
+    console.log("PRODUCT:", product);
   } catch {
     notFound();
   }
@@ -34,12 +36,8 @@ export default async function ProductDetails({
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-10">
-      {/* Product Details */}
       <div className="grid gap-12 md:grid-cols-2">
-        {/* Product Gallery */}
         <ProductGallery product={product} />
-
-        {/* Product Information */}
         <div className="flex flex-col justify-center">
           <p className="text-sm font-medium uppercase tracking-wide text-gray-500">
             {product.category.name}
@@ -63,7 +61,6 @@ export default async function ProductDetails({
         </div>
       </div>
 
-      {/* Related Products */}
       <section className="mt-12">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900">
