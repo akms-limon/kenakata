@@ -42,3 +42,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ## Install Lucide icons
 From your project root:
 npm install lucide-react
+
+
+## Install next-themes
+npm install next-themes
+

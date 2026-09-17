@@ -44,7 +44,7 @@ export default async function Home() {
 
             <p className="mt-3 max-w-xl text-base leading-7 text-gray-600">
               Discover quality products at great prices and
-              find something you'll love.
+              find something you will love.
             </p>
 
             <Link
@@ -115,7 +115,7 @@ export default async function Home() {
       <section className="mx-auto max-w-7xl px-4 py-8">
         <div className="rounded-2xl bg-black px-6 py-8 text-center text-white md:px-12">
           <h2 className="text-2xl font-bold">
-            Find something you'll love
+            Find something you will love
           </h2>
 
           <p className="mx-auto mt-2 max-w-xl text-sm text-gray-300">

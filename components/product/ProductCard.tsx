@@ -1,8 +1,16 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { ShoppingCart, ArrowRight } from "lucide-react";
+import {
+  ShoppingCart,
+  ArrowRight,
+  Heart,
+} from "lucide-react";
+
 import type { Product } from "@/types/product";
 import AddToCartButton from "@/components/cart/AddToCartButton";
+import { useWishlist } from "@/components/wishlist/WishlistProvider";
 
 type ProductCardProps = {
   product: Product;
@@ -11,17 +19,52 @@ type ProductCardProps = {
 export default function ProductCard({
   product,
 }: ProductCardProps) {
+  const {
+    toggleWishlist,
+    isInWishlist,
+  } = useWishlist();
+
+  const isLoved = isInWishlist(product.id);
+
+  function handleWishlistClick() {
+    toggleWishlist(product);
+  }
+
   return (
     <article className="bg-gray-50 p-10 text-3xl text-white">
-      <Link href={`/products/${product.id}`}>
-        <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100">
-          <img
-            src={product.images[0]}
-            alt={product.title}
-            className="h-full w-full object-contain p-4"
+      <div className="relative">
+        <Link href={`/products/${product.id}`}>
+          <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100">
+            <Image
+              src={product.images[0]}
+              alt={product.title}
+              width={500}
+              height={500}
+              className="h-full w-full object-cover"
             />
-        </div>
-      </Link>
+          </div>
+        </Link>
+
+        <button
+          type="button"
+          onClick={handleWishlistClick}
+          aria-label={
+            isLoved
+              ? "Remove from wishlist"
+              : "Add to wishlist"
+          }
+          className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md transition hover:scale-105"
+        >
+          <Heart
+            size={20}
+            className={
+              isLoved
+                ? "fill-red-500 text-red-500"
+                : "text-gray-600"
+            }
+          />
+        </button>
+      </div>
 
       <div className="mt-4">
         <p className="text-sm text-gray-500">

@@ -12,36 +12,34 @@ export async function POST(request: Request) {
 
   const body = await request.json();
 
-  const response = await fetch(`${API_URL}/auth/login`, {
+  const response = await fetch(`${API_URL}/users/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
+      name: body.name,
       email: body.email,
       password: body.password,
+      avatar: "https://picsum.photos/800",
     }),
   });
 
+  const data = await response.json();
+
   if (!response.ok) {
     return NextResponse.json(
-      { message: "Invalid email or password" },
+      {
+        message: data.message || "Registration failed",
+      },
       { status: response.status }
     );
   }
 
-  const data = await response.json();
-
-  const responseData = NextResponse.json({
-    message: "Login successful",
-  });
-
-  responseData.cookies.set("access_token", data.access_token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    path: "/",
-  });
-
-  return responseData;
+  return NextResponse.json(
+    {
+      message: "Registration successful",
+    },
+    { status: 201 }
+  );
 }

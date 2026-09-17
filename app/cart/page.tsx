@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
 import { useCart } from "@/components/cart/CartProvider";
+import Image from "next/image";
 
 export default function CartPage() {
   const {
@@ -16,19 +17,36 @@ export default function CartPage() {
     0
   );
 
-  if (cartItems.length === 0) {
-    return (
-      <main className="mx-auto max-w-7xl px-4 py-16">
-        <h1 className="text-3xl font-bold text-gray-900">
-          Your Cart
+if (cartItems.length === 0) {
+  return (
+    <main className="mx-auto flex min-h-[70vh] max-w-3xl items-center justify-center px-4 py-16">
+      <div className="w-full rounded-2xl border border-gray-200 bg-white p-10 text-center shadow-sm">
+        <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gray-100">
+          <ShoppingCart
+            size={36}
+            className="text-gray-500"
+          />
+        </div>
+
+        <h1 className="mt-6 text-3xl font-bold text-gray-900">
+          Your Cart Is Empty
         </h1>
 
-        <p className="mt-6 text-gray-600">
-          Your cart is empty.
+        <p className="mx-auto mt-3 max-w-md text-gray-600">
+          You have not added any products to your cart yet.
+          Explore our products and find something you like.
         </p>
-      </main>
-    );
-  }
+
+        <Link
+          href="/products"
+          className="mt-8 inline-flex rounded-lg bg-black px-6 py-3 text-sm font-medium text-white transition hover:bg-gray-800"
+        >
+          Continue Shopping
+        </Link>
+      </div>
+    </main>
+  );
+}
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-10">
@@ -46,10 +64,12 @@ export default function CartPage() {
               className="flex gap-4 rounded-xl border border-gray-200 bg-white p-4"
             >
               <div className="flex h-28 w-28 shrink-0 items-center justify-center rounded-lg bg-gray-100 p-3">
-                <img
-                  src={item.product.images[0]}
-                  alt={item.product.title}
-                  className="h-full w-full object-contain"
+                <Image
+                src={item.product.images[0]}
+                alt={item.product.title}
+                width={100}
+                height={100}
+                className="h-20 w-20 rounded-lg object-cover"
                 />
               </div>
 
