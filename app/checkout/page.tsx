@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useCart } from "@/components/cart/CartProvider";
+import { checkoutSchema } from "@/lib/validations/checkout";
 
 export default function CheckoutPage() {
   const { cartItems, clearCart } = useCart();
@@ -26,14 +27,17 @@ export default function CheckoutPage() {
   ) {
     event.preventDefault();
 
-    if (
-      !name.trim() ||
-      !email.trim() ||
-      !phone.trim() ||
-      !city.trim() ||
-      !address.trim() ||
-      !paymentMethod
-    ) {
+    const result = checkoutSchema.safeParse({
+      fullName: name,
+      email,
+      phone,
+      city,
+      address,
+      payment: paymentMethod.toLowerCase(),
+    });
+
+    if (!result.success) {
+      alert(result.error.issues[0].message);
       return;
     }
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { registerUser } from "@/lib/api/auth";
+import { registerSchema } from "@/lib/validations/auth";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -22,6 +23,14 @@ export default function RegisterPage() {
 
     setError("");
     setLoading(true);
+
+    const result = registerSchema.safeParse({ name, email, password });
+
+    if (!result.success) {
+      setError(result.error.issues[0].message);
+      setLoading(false);
+      return;
+    }
 
     try {
       await registerUser(name, email, password);
