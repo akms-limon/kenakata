@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Navbar from "@/components/layout/Navbar";
 import { CartProvider } from "@/components/cart/CartProvider";
 import { getSession } from "@/lib/auth/session";
-import ThemeProvider from "@/components/theme/ThemeProvider";
 import "./globals.css";
 import { WishlistProvider } from "@/components/wishlist/WishlistProvider";
+import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
   title: "KenaKata",
@@ -21,14 +21,13 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <ThemeProvider>
           <WishlistProvider>
             <CartProvider>
                 <Navbar isLoggedIn={isLoggedIn} />
                 {children}
             </CartProvider>
             </WishlistProvider>
-        </ThemeProvider>
+            <Footer />
       </body>
     </html>
   );

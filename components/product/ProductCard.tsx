@@ -2,11 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ShoppingCart,
-  ArrowRight,
-  Heart,
-} from "lucide-react";
+import { ArrowRight, Heart } from "lucide-react";
 
 import type { Product } from "@/types/product";
 import AddToCartButton from "@/components/cart/AddToCartButton";
@@ -16,78 +12,111 @@ type ProductCardProps = {
   product: Product;
 };
 
+const ACCENTS = [
+  { bar: "#ff6a00", chip: "#fff1e6", text: "#c94e00" },
+  { bar: "#0ea5a5", chip: "#e6f7f7", text: "#0a7373" },
+  { bar: "#ff4470", chip: "#ffe8ee", text: "#c22452" },
+  { bar: "#6c5ce7", chip: "#efecfd", text: "#4b3fb0" },
+];
+
+function accentFor(key: string) {
+  let hash = 0;
+
+  for (let i = 0; i < key.length; i++) {
+    hash = key.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  return ACCENTS[Math.abs(hash) % ACCENTS.length];
+}
+
 export default function ProductCard({
   product,
 }: ProductCardProps) {
-  const {
-    toggleWishlist,
-    isInWishlist,
-  } = useWishlist();
+  const { toggleWishlist, isInWishlist } = useWishlist();
 
   const isLoved = isInWishlist(product.id);
 
-  function handleWishlistClick() {
-    toggleWishlist(product);
-  }
+  const accent = accentFor(
+    product.category?.name || "General"
+  );
 
   return (
-    <article className="bg-gray-50 p-10 text-3xl text-white">
+    <article className="group relative overflow-hidden border border-gray-200 bg-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
+      {/* Category Accent */}
+      <div
+        className="h-[3px] w-full"
+        style={{ backgroundColor: accent.bar }}
+      />
+
+      {/* Product Image */}
       <div className="relative">
         <Link href={`/products/${product.id}`}>
-          <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100">
+          <div className="relative aspect-[4/3] overflow-hidden bg-gray-50">
             <Image
               src={product.images[0]}
               alt={product.title}
-              width={500}
-              height={500}
-              className="h-full w-full object-cover"
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1279px) 33vw, 20vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
           </div>
         </Link>
 
+        {/* Wishlist */}
         <button
           type="button"
-          onClick={handleWishlistClick}
+          onClick={() => toggleWishlist(product)}
           aria-label={
             isLoved
               ? "Remove from wishlist"
               : "Add to wishlist"
           }
-          className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md transition hover:scale-105"
+          className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-sm transition-transform duration-200 hover:scale-110"
         >
           <Heart
-            size={20}
+            size={16}
             className={
               isLoved
-                ? "fill-red-500 text-red-500"
-                : "text-gray-600"
+                ? "fill-[#ff4470] text-[#ff4470]"
+                : "text-gray-400"
             }
           />
         </button>
       </div>
 
-      <div className="mt-4">
-        <p className="text-sm text-gray-500">
-          {product.category.name}
-        </p>
+      {/* Product Information */}
+      <div className="p-3">
+        <span
+          className="inline-block rounded px-2 py-0.5 text-[10px] font-semibold"
+          style={{
+            backgroundColor: accent.chip,
+            color: accent.text,
+          }}
+        >
+          {product.category?.name || "Uncategorized"}
+        </span>
 
-        <h2 className="mt-1 line-clamp-2 min-h-12 text-base font-semibold text-gray-900">
-          {product.title}
-        </h2>
+        <Link href={`/products/${product.id}`}>
+          <h2 className="mt-1.5 line-clamp-2 min-h-9 text-sm font-medium leading-[18px] text-gray-800 transition-colors duration-200 hover:text-gray-950">
+            {product.title}
+          </h2>
+        </Link>
 
-        <p className="mt-3 text-lg font-bold text-gray-900">
+        {/* Price */}
+        <p className="mt-1 text-base font-bold text-[#ff6a00]">
           ${product.price}
         </p>
 
-        <div className="mt-4 flex flex-col gap-2">
+        {/* Actions */}
+        <div className="mt-2.5 flex flex-col gap-1.5">
           <AddToCartButton product={product} />
 
           <Link
             href={`/products/${product.id}`}
-            className="flex items-center justify-center gap-2 rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-medium text-gray-900 transition hover:bg-gray-50"
+            className="flex h-8 w-full items-center justify-center gap-1 rounded-md border border-gray-300 px-2 text-[11px] font-medium text-gray-700 transition-all duration-200 hover:border-[#ff6a00] hover:text-[#ff6a00]"
           >
-            View Product
-            <ArrowRight size={17} />
+            View Details
+            <ArrowRight size={12} />
           </Link>
         </div>
       </div>

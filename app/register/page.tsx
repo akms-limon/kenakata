@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { UserPlus, Mail, Lock, User, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
 import { registerUser } from "@/lib/api/auth";
 import { registerSchema } from "@/lib/validations/auth";
 
@@ -24,7 +26,11 @@ export default function RegisterPage() {
     setError("");
     setLoading(true);
 
-    const result = registerSchema.safeParse({ name, email, password });
+    const result = registerSchema.safeParse({
+      name,
+      email,
+      password,
+    });
 
     if (!result.success) {
       setError(result.error.issues[0].message);
@@ -48,105 +54,150 @@ export default function RegisterPage() {
   }
 
   return (
-    <main className="flex min-h-[calc(100vh-80px)] items-center justify-center px-4 py-10">
+    <main className="flex min-h-[calc(100vh-80px)] items-center justify-center bg-gray-50 px-4 py-10">
       <div className="w-full max-w-md">
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-          <h1 className="text-2xl font-bold text-gray-900">
-            Create Account
-          </h1>
+        <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
+          <div className="text-center">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#fff1e6]">
+              <UserPlus
+                size={22}
+                className="text-[#ff6a00]"
+              />
+            </div>
 
-          <p className="mt-2 text-sm text-gray-600">
-            Create your KenaKata account.
-          </p>
+            <h1 className="mt-4 text-2xl font-bold tracking-tight text-gray-900">
+              Create Your Account
+            </h1>
+
+            <p className="mt-2 text-sm text-gray-500">
+              Join KenaKata and start shopping today.
+            </p>
+          </div>
 
           {error && (
-            <div className="mt-5 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-600">
+            <div className="mt-6 rounded-lg border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-600">
               {error}
             </div>
           )}
 
           <form
             onSubmit={handleSubmit}
-            className="mt-6 space-y-4"
+            className="mt-7 space-y-4"
           >
             <div>
               <label
                 htmlFor="name"
-                className="mb-1 block text-sm font-medium text-gray-700"
+                className="mb-1.5 block text-xs font-semibold text-gray-900"
               >
-                Name
+                Full Name
               </label>
 
-              <input
-                id="name"
-                type="text"
-                value={name}
-                onChange={(event) =>
-                  setName(event.target.value)
-                }
-                required
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-gray-900"
-                placeholder="Your name"
-              />
+              <div className="relative">
+                <User
+                  size={16}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                />
+
+                <input
+                  id="name"
+                  type="text"
+                  value={name}
+                  onChange={(event) =>
+                    setName(event.target.value)
+                  }
+                  required
+                  placeholder="Enter your full name"
+                  className="h-11 w-full rounded-lg border border-gray-300 bg-white pl-9 pr-3 text-sm text-gray-900 outline-none transition-colors duration-200 placeholder:text-gray-400 focus:border-[#ff6a00] focus:ring-1 focus:ring-[#ff6a00]"
+                />
+              </div>
             </div>
 
             <div>
               <label
                 htmlFor="email"
-                className="mb-1 block text-sm font-medium text-gray-700"
+                className="mb-1.5 block text-xs font-semibold text-gray-900"
               >
-                Email
+                Email Address
               </label>
 
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(event) =>
-                  setEmail(event.target.value)
-                }
-                required
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-gray-900"
-                placeholder="you@example.com"
-              />
+              <div className="relative">
+                <Mail
+                  size={16}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                />
+
+                <input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(event) =>
+                    setEmail(event.target.value)
+                  }
+                  required
+                  placeholder="you@example.com"
+                  className="h-11 w-full rounded-lg border border-gray-300 bg-white pl-9 pr-3 text-sm text-gray-900 outline-none transition-colors duration-200 placeholder:text-gray-400 focus:border-[#ff6a00] focus:ring-1 focus:ring-[#ff6a00]"
+                />
+              </div>
             </div>
 
             <div>
               <label
                 htmlFor="password"
-                className="mb-1 block text-sm font-medium text-gray-700"
+                className="mb-1.5 block text-xs font-semibold text-gray-900"
               >
                 Password
               </label>
 
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(event) =>
-                  setPassword(event.target.value)
-                }
-                required
-                minLength={4}
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-gray-900"
-                placeholder="••••••••"
-              />
+              <div className="relative">
+                <Lock
+                  size={16}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                />
+
+                <input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(event) =>
+                    setPassword(event.target.value)
+                  }
+                  required
+                  minLength={4}
+                  placeholder="Enter your password"
+                  className="h-11 w-full rounded-lg border border-gray-300 bg-white pl-9 pr-3 text-sm text-gray-900 outline-none transition-colors duration-200 placeholder:text-gray-400 focus:border-[#ff6a00] focus:ring-1 focus:ring-[#ff6a00]"
+                />
+              </div>
+
+              <p className="mt-1.5 text-[11px] text-gray-400">
+                Password must be at least 4 characters.
+              </p>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-lg bg-black px-4 py-3 text-sm font-medium text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-60"
+              className="mt-2 flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[#ff6a00] px-4 text-sm font-semibold text-white transition-all duration-200 hover:bg-[#e65f00] hover:shadow-md active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {loading ? "Creating Account..." : "Register"}
+              <UserPlus size={17} />
+
+              {loading
+                ? "Creating Account..."
+                : "Create Account"}
             </button>
           </form>
 
-          <p className="mt-6 text-center text-sm text-gray-600">
+          <div className="mt-6 flex items-center justify-center gap-1.5 text-[11px] text-gray-400">
+            <ShieldCheck size={13} />
+            <span>Your information is securely handled.</span>
+          </div>
+
+          <div className="my-6 h-px bg-gray-200" />
+
+          <p className="text-center text-sm text-gray-500">
             Already have an account?{" "}
             <Link
               href="/logIn"
-              className="font-medium text-gray-900 hover:underline"
+              className="font-semibold text-[#ff6a00] transition-colors hover:text-[#e65f00]"
             >
               Log In
             </Link>
