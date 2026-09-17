@@ -35,7 +35,7 @@ export default function FeaturedProducts({
             onClick={() =>
               setVisibleCount((count) => count + 10)
             }
-            className="rounded-md border border-gray-300 px-5 py-2 text-xs font-medium text-gray-800 transition-all duration-200 hover:border-[#ff6a00] hover:text-[#ff6a00] active:scale-[0.98]"
+            className="rounded-md border border-[#ff6a00] text-[#ff6a00] px-5 py-2 text-xs font-medium transition-all duration-200 active:scale-[0.98]"
           >
             Load More
           </button>

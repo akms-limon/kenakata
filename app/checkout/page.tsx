@@ -5,7 +5,6 @@ import { CheckCircle2, LockKeyhole } from "lucide-react";
 import { useState } from "react";
 
 import { useCart } from "@/components/cart/CartProvider";
-import { checkoutSchema } from "@/lib/validations/checkout";
 
 export default function CheckoutPage() {
   const { cartItems, clearCart } = useCart();
@@ -30,19 +29,6 @@ export default function CheckoutPage() {
     event: React.FormEvent<HTMLFormElement>
   ) {
     event.preventDefault();
-
-    const result = checkoutSchema.safeParse({
-      fullName: name,
-      email,
-      phone,
-      city,
-      address,
-      payment: paymentMethod.toLowerCase(),
-    });
-
-    if (!result.success) {
-      return;
-    }
 
     clearCart();
     setOrderPlaced(true);
@@ -75,7 +61,7 @@ export default function CheckoutPage() {
               </span>
 
               <span className="font-medium text-gray-900">
-                {paymentMethod}
+                {paymentMethod || "Not selected"}
               </span>
             </div>
 

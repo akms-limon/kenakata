@@ -23,7 +23,9 @@ function accentFor(key: string) {
   let hash = 0;
 
   for (let i = 0; i < key.length; i++) {
-    hash = key.charCodeAt(i) + ((hash << 5) - hash);
+    hash =
+      key.charCodeAt(i) +
+      ((hash << 5) - hash);
   }
 
   return ACCENTS[Math.abs(hash) % ACCENTS.length];
@@ -32,7 +34,8 @@ function accentFor(key: string) {
 export default function ProductCard({
   product,
 }: ProductCardProps) {
-  const { toggleWishlist, isInWishlist } = useWishlist();
+  const { toggleWishlist, isInWishlist } =
+    useWishlist();
 
   const isLoved = isInWishlist(product.id);
 
@@ -40,21 +43,28 @@ export default function ProductCard({
     product.category?.name || "General"
   );
 
+  const image =
+    product.images?.[0] ||
+    "/images/product-placeholder.png";
+
+  const title =
+    product.title || "Untitled Product";
+
   return (
     <article className="group relative overflow-hidden border border-gray-200 bg-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
-      {/* Category Accent */}
       <div
         className="h-[3px] w-full"
-        style={{ backgroundColor: accent.bar }}
+        style={{
+          backgroundColor: accent.bar,
+        }}
       />
 
-      {/* Product Image */}
       <div className="relative">
         <Link href={`/products/${product.id}`}>
           <div className="relative aspect-[4/3] overflow-hidden bg-gray-50">
             <Image
-              src={product.images[0]}
-              alt={product.title}
+              src={image}
+              alt={title}
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1279px) 33vw, 20vw"
               className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -62,10 +72,11 @@ export default function ProductCard({
           </div>
         </Link>
 
-        {/* Wishlist */}
         <button
           type="button"
-          onClick={() => toggleWishlist(product)}
+          onClick={() =>
+            toggleWishlist(product)
+          }
           aria-label={
             isLoved
               ? "Remove from wishlist"
@@ -84,7 +95,6 @@ export default function ProductCard({
         </button>
       </div>
 
-      {/* Product Information */}
       <div className="p-3">
         <span
           className="inline-block rounded px-2 py-0.5 text-[10px] font-semibold"
@@ -93,21 +103,22 @@ export default function ProductCard({
             color: accent.text,
           }}
         >
-          {product.category?.name || "Uncategorized"}
+          {product.category?.name ||
+            "Uncategorized"}
         </span>
 
-        <Link href={`/products/${product.id}`}>
+        <Link
+          href={`/products/${product.id}`}
+        >
           <h2 className="mt-1.5 line-clamp-2 min-h-9 text-sm font-medium leading-[18px] text-gray-800 transition-colors duration-200 hover:text-gray-950">
-            {product.title}
+            {title}
           </h2>
         </Link>
 
-        {/* Price */}
         <p className="mt-1 text-base font-bold text-[#ff6a00]">
           ${product.price}
         </p>
 
-        {/* Actions */}
         <div className="mt-2.5 flex flex-col gap-1.5">
           <AddToCartButton product={product} />
 

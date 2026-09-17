@@ -2,14 +2,10 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function proxy(request: NextRequest) {
-  const accessToken =
-    request.cookies.get("access_token");
+  const accessToken = request.cookies.get("access_token");
 
-  if (!accessToken) {
-    const loginUrl = new URL(
-      "/logIn",
-      request.url
-    );
+  if (!accessToken?.value) {
+    const loginUrl = new URL("/logIn", request.url);
 
     loginUrl.searchParams.set(
       "callbackUrl",
