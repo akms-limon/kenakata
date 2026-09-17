@@ -47,3 +47,6 @@ npm install lucide-react
 ## Install next-themes
 npm install next-themes
 
+
+## Install zod
+npm install zod
