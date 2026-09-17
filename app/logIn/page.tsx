@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { loginUser } from "@/lib/api/auth";
+import { loginSchema } from "@/lib/validations/auth";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -22,6 +23,14 @@ export default function LoginPage() {
 
     setError("");
     setIsLoading(true);
+    
+    const result = loginSchema.safeParse({ email, password });
+
+    if (!result.success) {
+      setError(result.error.issues[0].message);
+      setIsLoading(false);
+      return;
+    }
 
     try {
     await loginUser(email, password);
