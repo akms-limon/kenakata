@@ -37,7 +37,6 @@ export default function CheckoutPage() {
     });
 
     if (!result.success) {
-      alert(result.error.issues[0].message);
       return;
     }
 
